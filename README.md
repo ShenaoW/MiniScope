@@ -7,68 +7,147 @@ MiniDroid is a framework for detecting privacy violations using hybrid analysis.
 ### Basics
 
 - Ubuntu 20.04
-- Android Virtual Device (Android8.1, rooted)
+- Rooted Android Device (Physical or Virtual)
+- Local area network (Android device and Laptop could connect to each other)
 
 ### Dependencies
 
-**For Ubuntu:**
+#### Ubuntu
 
-Install requirements for `pdg_js` and `wxappUnpacker`
+1. Install requirements for `pdg_js` and `wxappUnpacker`
 
-```bash
-# Make sure that node.js and npm are available
-node --version && cd src/static/pdg_js && npm i  #
-cd src/static/utils/wxappUnpacker && npm i
-```
+   ```bash
+   # Make sure that node.js and npm are available
+   sudo apt update && sudo apt install nodejs npm
+   node --version && cd src/static/pdg_js && npm i
+   cd src/static/utils/wxappUnpacker && npm i
+   ```
 
-Install requirements for python
+2. Install requirements for python
 
-```bash
-# Install requirements
-pip install -r requirements.txt
-```
+   ```bash
+   # Make sure that python3.7+ and pip are available
+   sudo apt install python3 python3-pip
+   # Install requirements
+   pip3 install -r requirements.txt
+   ```
 
-**For Android Virtual Device:**
+3. Install Android SDK Platform-Tools 
 
-Install Appium and UIautomator2
+   Android SDK is needed to run Appium and connect the android device.
 
-```bash
-# Make sure that AndroidSDK is available
-npm i --location=global appium  # Install Appium
-appium  # make sure appium server is started
-appium driver install uiautomator2  # Install uiautomator2 driver
-```
+   ```bash
+   https://developer.android.google.cn/studio/releases/platform-tools
+   ```
 
-Check the Xweb Kernel Version and enable kernel debug of WeChat (Tested on 107.0.5304.141)
+4. Install Appium and UIautomator2
 
-```bash
-# Enter the following URL from the WeChat chat box and click
-httpbin.org/user-agent  # Check Xweb Kernel Version
-https://sites.google.com/chromium.org/driver/downloads  # Download ChromeDriver of the appropriate version into minidroid/drivers
-http://debugxweb.qq.com/?inspector=true  # Enable Xweb Kernel Debugging
-```
+   ```bash
+   # Make sure that AndroidSDK is available
+   npm i --location=global appium  # Install Appium
+   appium  # make sure appium server is started
+   appium driver install uiautomator2  # Install uiautomator2 driver
+   ```
 
-Install Frida-server for sensitive API hooking
+#### Android Device
 
-```bash
-# Make sure that adb is available
-https://github.com/frida/frida/releases  # Download frida-server
-adb [your-frida-server-path]./frida-server  # Start frida-server
-frida-ps -U  # Make sure that the frida-server is available now
-```
+1. Root device firstly, and **Magisk is recommended**.
 
-Install mitmproxy certificates and objection for web packet capture
+   ```bash
+   https://github.com/topjohnwu/Magisk
+   https://topjohnwu.github.io/Magisk/install.html
+   https://magiskcn.com/
+   ```
 
-```bash
-https://github.com/sensepost/objection # Install objection to bypass ssl pinning
-https://docs.mitmproxy.org/stable/concepts-certificates/ # Install mitmproxy certificates
+2. Check the Xweb Kernel Version(Tested on 107.0.5304.141) and enable kernel debug of WeChat(Tested on 8.37).
 
-# If Android version is 9, Magisk is recommended. You can import certificate via Magisk plugin.
-```
+   ```bash
+   # Enter the following URL from the WeChat chat box and click
+   httpbin.org/user-agent  # Check Xweb Kernel Version
+   https://sites.google.com/chromium.org/driver/downloads  # Download ChromeDriver of the appropriate version into minidroid/drivers
+   http://debugxweb.qq.com/?inspector=true  # Enable Xweb Kernel Debugging
+   ```
+
+3. Install Frida-server for sensitive API hooking.
+
+   - Install with Magisk Plugin **(Recommended)**.
+
+     ```bash
+     https://github.com/ViRb3/magisk-frida
+     ```
+
+   - Install manually.
+
+     ```bash
+     # Make sure that adb is available
+     https://github.com/frida/frida/releases  # Download frida-server
+     adb [your-frida-server-path]./frida-server  # Start frida-server
+     frida-ps -U  # Make sure that the frida-server is available now
+     ```
+
+4. Install Objection to bypass ssl pinning.
+
+   ```bash
+   # Objection: https://github.com/sensepost/objection 
+   # SSL pinning: https://www.thesslstore.com/blog/an-introduction-to-pinning/
+   pip3 install objection
+   
+   # Manually
+   objection -g com.tencent.mm explore
+   	android sslpinning disable
+   # But code will run above automatically.
+   ```
+
+5. Install mitmproxy certificates for web packet capturing.
+
+   ```bash
+   https://docs.mitmproxy.org/stable/concepts-certificates/ # Install mitmproxy certificates
+   ```
+
+   - Android version below 8 (included)
+
+     Device trust imported certificate. Download the certificate, and click it to install.
+
+   - Android version above 9 (included)
+
+     Device doesn’t trust user imported certificate. It’s needed to place the certificate in `/system/etc/security/cacerts`. If `/system` is unreadable and cannot be remounted, a customed Magisk plugin is needed.
+
+     ```bash
+     # Plugin modules: https://github.com/Magisk-Modules-Repo/energizedprotection
+     git clone https://github.com/Magisk-Modules-Repo/energizedprotection.git
+     
+     # Modify ./module.prop as below
+     id=Certs
+     name=Certs
+     version=***
+     versionCode=***
+     author=***
+     description=mitmproxy and Fiddler Certs.
+     
+     # Place cert into ./system/etc/security/cacerts
+     # Install the Magisk module.
+     # Reboot, and the cert is installed.
+     ```
+   
+   If you want to add your own packet filtering rules, add filter class to `./src/monitor/addons.py` and add the class name to `addons` variable.
 
 ### Pre-processing
 
-**Tokens Configuration:**
+#### Device connection
+
+Connect the device with Ubuntu via Android SDK platform-tools  (remote or usb).
+
+#### Run Appium
+
+```bash
+#! /bin/bash
+export ANDROID_HOME=/usr/lib/android-sdk
+
+echo $ANDROID_HOME
+/usr/local/bin/appium
+```
+
+#### Tokens Configuration:
 
 To obtain the current page path during dynamic testing
 
@@ -128,8 +207,10 @@ Here're arguments:
 
 - `-ca/--combinedAnalyzed`:  specify the combined analyzed file path.
 
+**Example:**
+
 ```bash
-python main.py -n 遂川旅游景点 -id wx4938079035028687 -pkg data/data_runtime/wx4938079035028687 -sa data/data_runtime/wx4938079035028687/StaticAnalyzer.pkl -da data/data_runtime/wx4938079035028687/DynamicAnalyzer.pkl   
+python3 main.py -n 遂川旅游景点 -id wx4938079035028687 -pkg data/data_runtime/wx4938079035028687 -sa data/data_runtime/wx4938079035028687/StaticAnalyzer.pkl -da data/data_runtime/wx4938079035028687/DynamicAnalyzer.pkl   
 ```
 
 ## License
