@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
+    "escodegen": "^2.0.0",
+    "esprima": "^4.0.1"
+  }
+}

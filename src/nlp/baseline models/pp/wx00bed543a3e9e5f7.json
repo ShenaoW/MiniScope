@@ -1,0 +1,49 @@
+{
+    "ret": "0",
+    "appid": "wx00bed543a3e9e5f7",
+    "app_nickname": "cdf会员购",
+    "privacy_detail_list": {
+        "item": [
+            "为了更新用户头像昵称，开发者将在获取你的明示同意后，收集你的微信昵称、头像",
+            "为了添加收货地址，开发者将在获取你的明示同意后，收集你的位置信息",
+            "为了绑定会员，收货地址联系人，开发者将在获取你的明示同意后，收集你的手机号",
+            "为了分享图片，开发者将在获取你的明示同意后，使用你的相册（仅写入）权限",
+            "开发者收集你的地址，用于添加收货地址",
+            "开发者收集你选中的照片或视频信息，用于评价商品，提供跨境通关证件",
+            "开发者收集你的身份证号码，用于跨境商品通关",
+            "开发者收集你的发票信息，用于开通发票"
+        ]
+    },
+    "setting_update_time": "1679981968",
+    "owner_setting": {
+        "contact_phone": "4009928686",
+        "contact_email": "",
+        "contact_qq": "",
+        "contact_weixin": "",
+        "notice_method": "小程序弹窗",
+        "store_expire_timestamp": "",
+        "ext_file_media_id": "",
+        "store_region": "1017"
+    },
+    "component_name": "飛界國際有限公司&nbsp;CROSS&nbsp;BORDER&nbsp;LIMITED",
+    "privacy_control_list": {
+        "item": [
+            "收集你的位置信息、使用你的相册（仅写入）权限",
+            "收集你的地址、收集你选中的照片或视频信息、收集你的手机号、收集你的发票信息"
+        ]
+    },
+    "plugin_privacy_info_list": {
+        "item": [
+            {
+                "plugin_appid": "wx2b03c6e691cd7370",
+                "plugin_biz_name": "深圳市腾讯计算机系统有限公司",
+                "plugin_name": "小程序直播组件",
+                "privacy_wording_list": []
+            }
+        ]
+    },
+    "sdk_detail_list": {
+        "list": []
+    },
+    "name": "中免國際有限公司&nbsp;CHINA&nbsp;DUTY&nbsp;FREE&nbsp;INTERNATIONAL&nbsp;LIMITED"
+}

@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "minidroid"
+version = "0.1.0"
+description = "Detecting Privacy Compliance Violations of MiniApps via Event-based UI Automation"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.scripts]
+pcyc = 'src.console:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

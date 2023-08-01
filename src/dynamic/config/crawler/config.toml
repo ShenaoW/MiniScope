@@ -1,0 +1,15 @@
+localChrome = "minidroid/drivers/107"
+appName = "֪ʶ����"
+appID = "wx4f706964b979122a"
+
+[capabilities]
+deviceName = "863a93c1"
+platformName = "Android"
+appPackage = "com.tencent.mm"
+appActivity = "com.tencent.mm.ui.LauncherUI"
+automationName = "uiautomator2"
+noReset = true
+unicodeKeyboard = true
+resetKeyboard = true
+chromedriverExecutable = "minidroid/drivers/107.exe"
+newCommandTimeout = 2400

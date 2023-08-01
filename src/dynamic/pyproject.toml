@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "PoliGuard-Crawler"
+version = "0.1.0"
+description = "The next generation of wechat mini-program privacy policy crawler."
+authors = ["Tr4ccK <trackonyou@outlook.com>"]
+readme = "README.md"
+packages = [{include = "pgc"}]
+
+[tool.poetry.scripts]
+pcyc = 'pgc.console:main'
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Appium-Python-Client = "^2.8.1"
+selenium = "^4.8.2"
+pgc = {path = "pgc"}
+loguru = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
