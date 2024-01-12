@@ -1,6 +1,6 @@
-# MiniDroid
+# MiniScope
 
-MiniDroid is a framework for detecting privacy violations using hybrid analysis. It introduces a novel topological structure named MDG (MiniApp Dependency Graph) to guide dynamic testing. At the same time, MiniDroid monitors privacy practices by hooking sensitive APIs, and cross-validates with privacy policies to detect violations.
+MiniScope is a framework for detecting privacy violations using hybrid analysis. It introduces a novel topological structure named MDG (MiniApp Dependency Graph) to guide dynamic testing. At the same time, MiniScope monitors privacy practices by hooking sensitive APIs, and cross-validates with privacy policies to detect violations.
 
 ## Prerequisites
 
